@@ -35,7 +35,7 @@ st.title('Liga de Investimentos da UFRN')
 logo_url = '/home/vinicio/repo/ligastream/liga.jpg'
 st.sidebar.image(logo_url, caption='Logo da Liga de Investimentos da UFRN')
 
-# Opção para plotar um gráfico (coloque o código do gráfico aqui)
+# Opção para plotar um gráfico (coloque o código    do gráfico aqui)
 st.sidebar.header('Opções')
 opcao_grafico = st.sidebar.selectbox('Selecione uma opção', ['Gráfico'])
 
