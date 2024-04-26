@@ -8,12 +8,29 @@ import plotly.graph_objects as go
 
 # Título da página
 st.title('Liga de Investimentos da UFRN')
-st.markdown("[Linkedin](https://www.linkedin.com/company/ufrnliga/)")
-st.markdown("[Instagram](https://www.instagram.com/ufrnliga/)")
+st.markdown("""Atividade visando formação e capacitação de discentes para desempenho de atividades
+            quantitativas no mercado financeiro. A "Liga de Investimentos" é inspirada em modelos de 
+            "finance clubs" em universidades de outros países e já amplamente replicados em universidades 
+            no Brasil sob a denominação geral de "Liga de Mercado Financeiro". Na liga, discentes são 
+            expostos a conteúdos com base na ciência financeira e têm a oportunidade de exercitarem 
+            na prática as ferramentas que decorrem do conhecimento científico na área. Essa experiência para 
+            os discentes propicia capacitação específica complementar à formação na graduação, conectando 
+            especialmente com o "aprender para o fazer". Nesta liga, tratamos apenas do emprego de 
+            ferramentas quantitativas como suporte para decisões de investimento no mercado de capitais. """)
 st.markdown('---')
 # Opções na barra lateral
+st.sidebar.header('Onde nos encontrar')
+st.sidebar.markdown("[Linkedin](https://www.linkedin.com/company/ufrnliga/)")
+st.sidebar.markdown("[Instagram](https://www.instagram.com/ufrnliga/)")
+st.sidebar.markdown('---')
 st.sidebar.header('Estudos')
 opcao_grafico = st.sidebar.radio('', ['Figuras do Ibovespa','Volatilidades no Ibovespa'])
+st.sidebar.markdown('---')
+st.sidebar.header('Equipe atual')
+st.sidebar.markdown("[Prof. Vinicio Almeida, UFRN](https://www.linkedin.com/in/vinicioalmeida/)")
+st.sidebar.markdown("[Prof. Robson Góes, UPE](https://www.linkedin.com/in/robson-g%C3%B3es-de-carvalho-9113b8180/)")
+st.sidebar.markdown("[Gabriel Carvalho, UFPE](https://www.linkedin.com/in/gabriel-carvalho-ab38b7209/)")
+st.sidebar.markdown("[Lucas Lima, UFCG](https://www.linkedin.com/in/lucasvitor/)")
 
 # Se a opção "Gráfico" estiver selecionada, plote o gráfico
 if opcao_grafico == 'Figuras do Ibovespa':
