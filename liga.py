@@ -27,10 +27,12 @@ st.sidebar.header('Estudos')
 opcao_grafico = st.sidebar.radio('', ['Figuras do Ibovespa','Volatilidades no Ibovespa'])
 st.sidebar.markdown('---')
 st.sidebar.header('Equipe atual')
-st.sidebar.markdown("[Prof. Vinicio Almeida, UFRN](https://www.linkedin.com/in/vinicioalmeida/)")
-st.sidebar.markdown("[Prof. Robson Góes, UPE](https://www.linkedin.com/in/robson-g%C3%B3es-de-carvalho-9113b8180/)")
 st.sidebar.markdown("[Gabriel Carvalho, UFPE](https://www.linkedin.com/in/gabriel-carvalho-ab38b7209/)")
 st.sidebar.markdown("[Lucas Lima, UFCG](https://www.linkedin.com/in/lucasvitor/)")
+st.sidebar.markdown('---')
+st.sidebar.header('Orientadores')
+st.sidebar.markdown("[Prof. Vinicio Almeida, UFRN](https://www.linkedin.com/in/vinicioalmeida/)")
+st.sidebar.markdown("[Prof. Robson Góes, UPE](https://www.linkedin.com/in/robson-g%C3%B3es-de-carvalho-9113b8180/)")
 
 # Se a opção "Gráfico" estiver selecionada, plote o gráfico
 if opcao_grafico == 'Figuras do Ibovespa':
