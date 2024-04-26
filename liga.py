@@ -31,10 +31,6 @@ st.markdown(f"""
 # Título da página
 st.title('Liga de Investimentos da UFRN')
 
-# Carregar e exibir o logo da liga
-logo_url = 'liga.jpg'
-st.sidebar.image(logo_url, caption='Logo da Liga de Investimentos da UFRN')
-
 # Opção para plotar um gráfico (coloque o código    do gráfico aqui)
 st.sidebar.header('Opções')
 opcao_grafico = st.sidebar.selectbox('Selecione uma opção', ['Gráfico'])
