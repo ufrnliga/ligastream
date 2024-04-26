@@ -1,47 +1,89 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
-
-# Define a cor de fundo e texto padrão
-cor_fundo = '#000000'  # Preto
-cor_texto = '#FFFF00'  # Amarelo
-
-# Configurações de estilo para o Streamlit
-st.markdown(f"""
-    <style>
-        .reportview-container .main .block-container{{
-            max-width: 1000px;
-            padding-top: 2rem;
-            padding-right: 2rem;
-            padding-left: 2rem;
-            padding-bottom: 2rem;
-        }}
-        img {{
-            max-width: 50%;
-        }}
-        .reportview-container .main {{
-            color: {cor_texto};
-            background-color: {cor_fundo};
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+import pandas as pd
+import yfinance as yf
+import plotly.express as px
+import plotly.graph_objects as go
+import tradingcomdados
+from tradingcomdados import alternative_data as ad
 
 # Título da página
 st.title('Liga de Investimentos da UFRN')
+st.markdown("[Linkedin](https://www.linkedin.com/company/ufrnliga/)")
+st.markdown("[Instagram](https://www.instagram.com/ufrnliga/)")
+st.markdown('---')
+# Opções na barra lateral
+st.sidebar.header('Estudos')
+opcao_grafico = st.sidebar.radio('', ['Figuras do Ibovespa','Volatilidades no Ibovespa'])
 
-# Opção para plotar um gráfico (coloque o código    do gráfico aqui)
-st.sidebar.header('Opções')
-opcao_grafico = st.sidebar.selectbox('Selecione uma opção', ['Gráfico'])
-
-if opcao_grafico == 'Gráfico':
-    # Código para plotar um gráfico (exemplo)
-    x = np.linspace(0, 10, 100)
-    y = np.sin(x)
+# Se a opção "Gráfico" estiver selecionada, plote o gráfico
+if opcao_grafico == 'Figuras do Ibovespa':
+    st.subheader('Figuras do Ibovespa')
+    st.markdown("""Atualizado diariamente.""")
+    st.markdown('---')
     
-    plt.plot(x, y)
-    plt.xlabel('X')
-    plt.ylabel('Y')
-    plt.title('Gráfico de exemplo')
+    # data
+    start = "2007-01-01"
+    ibov = yf.download('^BVSP', start = start)['Adj Close']
+    usdbrl = yf.download('USDBRL=X', start = start)['Adj Close'] 
+
+    # dataframe
+    ibovdf = pd.DataFrame(ibov)
+    ibovdf.columns = ['IBOV']
+    usdbrldf = pd.DataFrame(usdbrl)
+    usdbrldf.columns = ['USDBRL']
+    ibovusd = pd.merge(ibovdf, usdbrldf, left_index = True, right_index = True, how = 'inner')
+
+    # dolarizando o ibov
+    ibovusd['IBOVUSD'] = ibovusd['IBOV'] / ibovusd['USDBRL']
+
+    # Plotar o gráfico do IBOV
+    plt.plot(ibovusd['IBOV'], color='blue')
+    plt.xlabel('Ano')
+    plt.ylabel('Ibovespa')
+    plt.title('Ibovespa desde 2007')
+    st.pyplot(plt)
+
+    # Plotar o gráfico do IBOVUSD
+    plt.figure()
+    plt.plot(ibovusd['IBOVUSD'], color='green')
+    plt.xlabel('Ano')
+    plt.ylabel('Ibovespa dolarizado')
+    plt.title('Ibovespa dolarizado desde 2007')
+    st.pyplot(plt)
+
+if opcao_grafico == 'Volatilidades no Ibovespa':
+    st.subheader('Volatilidades no Ibovespa')
+    st.markdown("""Atualizado diariamente.""")
+    st.markdown('---')
+    
+    ad.index_composition('ibov')
+    codigos = ad.index_composition('ibov')['cod']
+    codsa = codigos + '.SA'
+    # Criar um DataFrame vazio para armazenar os dados baixados
+    dados_acoes = pd.DataFrame()
+    # Baixar os dados para cada ação
+    for cod in codsa:
+        try:
+            # Baixar os dados utilizando yfinance e adicionar à DataFrame
+            dados_acao = yf.download(cod, start='2024-01-01')['Adj Close'].to_frame()
+            dados_acoes = pd.concat([dados_acoes, dados_acao.rename(columns={'Adj Close': cod})], axis=1)
+        except Exception as e:
+            print(f"Erro ao baixar dados para {codsa}: {e}")
+
+    retornos_diarios = dados_acoes.pct_change().dropna()
+    desvio_padrao_diario = retornos_diarios.std()
+    desvio_padrao_diario.index = desvio_padrao_diario.index.str.slice(stop = -3)
+
+    # Plotar os desvios padrão diários
+    plt.figure()
+    plt.bar(desvio_padrao_diario.index, desvio_padrao_diario, color='blue')
+    plt.title('Desvio Padrão Diário dos Retornos')
+    plt.xlabel('Código da Ação')
+    plt.ylabel('Desvio Padrão')
+    plt.xticks(rotation='vertical')
+    plt.tick_params(axis='x', labelsize=5)
+    plt.grid(axis='y')
+    plt.tight_layout()
     st.pyplot(plt)
