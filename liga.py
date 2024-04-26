@@ -32,7 +32,7 @@ st.markdown(f"""
 st.title('Liga de Investimentos da UFRN')
 
 # Carregar e exibir o logo da liga
-logo_url = '/home/vinicio/repo/ligastream/liga.jpg'
+logo_url = 'liga.jpg'
 st.sidebar.image(logo_url, caption='Logo da Liga de Investimentos da UFRN')
 
 # Opção para plotar um gráfico (coloque o código    do gráfico aqui)
