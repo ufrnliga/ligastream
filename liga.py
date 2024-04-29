@@ -23,6 +23,7 @@ opcao_grafico = st.sidebar.radio('', ['Figuras do Ibovespa','Volatilidades no Ib
 st.sidebar.markdown('---')
 st.sidebar.header('Equipe atual')
 st.sidebar.markdown("[Gabriel Carvalho, UFPE](https://www.linkedin.com/in/gabriel-carvalho-ab38b7209/)")
+st.sidebar.markdown("[Georgio Kokkosis, UFPE](https://www.linkedin.com/in/georgio-kokkosis-4450a579/)")
 st.sidebar.markdown("[Lucas Lima, UFCG](https://www.linkedin.com/in/lucasvitor/)")
 st.sidebar.header('Orientadores')
 st.sidebar.markdown("[Prof. Vinicio Almeida, UFRN](https://www.linkedin.com/in/vinicioalmeida/)")
