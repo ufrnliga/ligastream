@@ -19,7 +19,7 @@ st.markdown("""Atividade visando formação e capacitação de discentes para de
             ferramentas quantitativas como suporte para decisões de investimento no mercado de capitais. """)
 st.markdown('---')
 # Opções na barra lateral
-opcao_grafico = st.sidebar.radio('', ['Figuras do Ibovespa','Volatilidades no Ibovespa'])
+opcao_grafico = st.sidebar.radio('', ['Figuras do Ibovespa','Volatilidades no Ibovespa', 'CDI x Ibovespa'])
 st.sidebar.markdown('---')
 st.sidebar.header('Equipe atual')
 st.sidebar.markdown("[Gabriel Carvalho, UFPE](https://www.linkedin.com/in/gabriel-carvalho-ab38b7209/)")
@@ -105,4 +105,41 @@ if opcao_grafico == 'Volatilidades no Ibovespa':
     plt.tick_params(axis='x', labelsize=5)
     plt.grid(axis='y')
     plt.tight_layout()
+    st.pyplot(plt)
+
+if opcao_grafico == 'CDI x Ibovespa':
+    st.subheader('CDI x Ibovespa')
+    st.markdown("""Atualizado diariamente.""")
+    st.markdown('---')
+    
+    def extracao_bcb(codigo, data_inicio, data_fim):
+        url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.{}/dados?formato=json&dataInicial={}&dataFinal={}'.format(codigo, data_inicio, data_fim)
+        df = pd.read_json(url)
+        df.set_index('data', inplace=True)
+        df.index = pd.to_datetime(df.index, dayfirst=True)
+        df.columns = ['SELIC']
+        df['SELIC'] = df['SELIC']/100
+        return df
+
+    data_inicio = '01/05/1993' 
+    data_fim = '30/04/2024'
+    dados=[]
+    dados = extracao_bcb(4390, data_inicio=data_inicio, data_fim=data_fim)
+    indices = ['^BVSP']
+
+    for i in indices:
+        dados[i] = yf.download(i, start='1993-05-01', end='2024-04-30', interval='1mo')['Adj Close'].pct_change()
+
+    dados = dados.iloc[1:]
+    dados = dados + 1
+
+    acumulado = dados.cumprod()
+
+    # Plot
+    plt.figure()
+    plt.plot(acumulado)
+    plt.xlabel('Anos')
+    plt.ylabel('Retornos acumulados')
+    plt.title('CDI x Ibovespa')
+    plt.legend(['CDI', 'Ibovespa'])  # Adiciona legendas    
     st.pyplot(plt)
