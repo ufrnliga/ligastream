@@ -26,6 +26,7 @@ st.sidebar.markdown("[Gabriel Carvalho, UFPE](https://www.linkedin.com/in/gabrie
 st.sidebar.markdown("[Georgio Kokkosis, UFPE](https://www.linkedin.com/in/georgio-kokkosis-4450a579/)")
 st.sidebar.markdown("[Luiz Gonçalves, UFPE](https://www.linkedin.com/in/luiz-f-gon%C3%A7alves-da-silva-763561244/)")
 st.sidebar.markdown("[Lucas Lima, UFCG](https://www.linkedin.com/in/lucasvitor/)")
+st.sidebar.markdown("[Paulo Lima, UFRN](https://www.linkedin.com/in/paulorog/)")
 st.sidebar.header('Orientadores')
 st.sidebar.markdown("[Prof. Vinicio Almeida, UFRN](https://www.linkedin.com/in/vinicioalmeida/)")
 st.sidebar.markdown("[Prof. Robson Góes, UPE](https://www.linkedin.com/in/robson-g%C3%B3es-de-carvalho-9113b8180/)")
