@@ -6,6 +6,9 @@ import yfinance as yf
 import plotly.express as px
 import plotly.graph_objects as go
 
+# Configuração da página
+st.set_page_config(page_title='Liga UFRN')
+
 # Título da página
 st.title('Liga de Investimentos da UFRN')
 st.markdown("""Atividade visando formação e capacitação de discentes para desempenho de atividades
