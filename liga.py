@@ -6,8 +6,6 @@ import yfinance as yf
 import plotly.express as px
 import plotly.graph_objects as go
 
-# Configuração da página
-st.set_page_config(page_title='Harpa Pro')
 
 # Título da página
 st.title('Liga de Investimentos da UFRN')
@@ -36,6 +34,8 @@ st.sidebar.markdown("[Prof. Robson Góes, UPE](https://www.linkedin.com/in/robso
 st.sidebar.markdown('---')
 st.sidebar.markdown("[Linkedin](https://www.linkedin.com/company/ufrnliga/)")
 st.sidebar.markdown("[Instagram](https://www.instagram.com/ufrnliga/)")
+
+st.set_page_config(page_title='Liga UFRN')
 
 # Se a opção "Gráfico" estiver selecionada, plote o gráfico
 if opcao_grafico == 'Figuras do Ibovespa':
