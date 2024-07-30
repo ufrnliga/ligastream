@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 # Configuração da página
-st.set_page_config(page_title='Liga UFRN')
+st.set_page_config(page_title='Harpa Pro')
 
 # Título da página
 st.title('Liga de Investimentos da UFRN')
