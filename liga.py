@@ -6,9 +6,10 @@ import yfinance as yf
 import plotly.express as px
 import plotly.graph_objects as go
 
+st.set_page_config(page_title='Liga UFRN')
 
 # Título da página
-st.title('Liga de Investimentos da UFRN')
+st.title('Liga de Investimentos da UFRNN')
 st.markdown("""Atividade visando formação e capacitação de discentes para desempenho de atividades
             quantitativas no mercado financeiro. A "Liga de Investimentos" é inspirada em modelos de 
             "finance clubs" em universidades de outros países e já amplamente replicados em universidades 
@@ -34,8 +35,6 @@ st.sidebar.markdown("[Prof. Robson Góes, UPE](https://www.linkedin.com/in/robso
 st.sidebar.markdown('---')
 st.sidebar.markdown("[Linkedin](https://www.linkedin.com/company/ufrnliga/)")
 st.sidebar.markdown("[Instagram](https://www.instagram.com/ufrnliga/)")
-
-st.set_page_config(page_title='Liga UFRN')
 
 # Se a opção "Gráfico" estiver selecionada, plote o gráfico
 if opcao_grafico == 'Figuras do Ibovespa':
