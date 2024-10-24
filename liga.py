@@ -88,13 +88,13 @@ if opcao_grafico == 'CDI x Ibovespa':
         return df
 
     data_inicio = '01/05/1993' 
-    data_fim = '30/04/2024'
+    data_fim = '30/09/2024'
     dados=[]
     dados = extracao_bcb(4390, data_inicio=data_inicio, data_fim=data_fim)
     indices = ['^BVSP']
 
     for i in indices:
-        dados[i] = yf.download(i, start='1993-05-01', end='2024-04-30', interval='1mo')['Adj Close'].pct_change()
+        dados[i] = yf.download(i, start='1993-05-01', end='2024-09-30', interval='1mo')['Adj Close'].pct_change()
 
     dados = dados.iloc[1:]
     dados = dados + 1
