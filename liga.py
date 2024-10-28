@@ -21,7 +21,6 @@ st.markdown("""Atividade visando formação e capacitação de discentes para de
             ferramentas quantitativas como suporte para decisões de investimento no mercado de capitais. """)
 st.markdown('---')
 # Opções na barra lateral
-opcao_grafico = st.sidebar.radio('', ['Figuras do Ibovespa', 'CDI x Ibovespa'])
 st.sidebar.markdown('---')
 st.sidebar.header('Equipe atual')
 st.sidebar.markdown("[Gabriel Carvalho, UFPE](https://www.linkedin.com/in/gabriel-carvalho-ab38b7209/)")
@@ -36,76 +35,33 @@ st.sidebar.markdown('---')
 st.sidebar.markdown("[Linkedin](https://www.linkedin.com/company/ufrnliga/)")
 st.sidebar.markdown("[Instagram](https://www.instagram.com/ufrnliga/)")
 
-# Se a opção "Gráfico" estiver selecionada, plote o gráfico
-if opcao_grafico == 'Figuras do Ibovespa':
-    st.subheader('Figuras do Ibovespa')
-    st.markdown("""Atualizado diariamente.""")
-    st.markdown('---')
     
-    # data
-    start = "2007-01-01"
-    ibov = yf.download('^BVSP', start = start)['Adj Close']
-    usdbrl = yf.download('USDBRL=X', start = start)['Adj Close'] 
+# data
+start = "2007-01-01"
+ibov = yf.download('^BVSP', start = start)['Adj Close']
+usdbrl = yf.download('USDBRL=X', start = start)['Adj Close'] 
 
-    # dataframe
-    ibovdf = pd.DataFrame(ibov)
-    ibovdf.columns = ['IBOV']
-    usdbrldf = pd.DataFrame(usdbrl)
-    usdbrldf.columns = ['USDBRL']
-    ibovusd = pd.merge(ibovdf, usdbrldf, left_index = True, right_index = True, how = 'inner')
+# dataframe
+ibovdf = pd.DataFrame(ibov)
+ibovdf.columns = ['IBOV']
+usdbrldf = pd.DataFrame(usdbrl)
+usdbrldf.columns = ['USDBRL']
+ibovusd = pd.merge(ibovdf, usdbrldf, left_index = True, right_index = True, how = 'inner')
 
-    # dolarizando o ibov
-    ibovusd['IBOVUSD'] = ibovusd['IBOV'] / ibovusd['USDBRL']
+# dolarizando o ibov
+ibovusd['IBOVUSD'] = ibovusd['IBOV'] / ibovusd['USDBRL']
 
-    # Plotar o gráfico do IBOV
-    plt.plot(ibovusd['IBOV'], color='blue')
-    plt.xlabel('Ano')
-    plt.ylabel('Ibovespa')
-    plt.title('Ibovespa desde 2007')
-    st.pyplot(plt)
+# Plotar o gráfico do IBOV
+plt.plot(ibovusd['IBOV'], color='blue')
+plt.xlabel('Ano')
+plt.ylabel('Ibovespa')
+plt.title('Ibovespa desde 2007')
+st.pyplot(plt)
 
-    # Plotar o gráfico do IBOVUSD
-    plt.figure()
-    plt.plot(ibovusd['IBOVUSD'], color='green')
-    plt.xlabel('Ano')
-    plt.ylabel('Ibovespa dolarizado')
-    plt.title('Ibovespa dolarizado desde 2007')
-    st.pyplot(plt)
-
-
-if opcao_grafico == 'CDI x Ibovespa':
-    st.subheader('CDI x Ibovespa')
-    st.markdown("""Atualizado diariamente.""")
-    st.markdown('---')
-    
-    def extracao_bcb(codigo, data_inicio, data_fim):
-        url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.{}/dados?formato=json&dataInicial={}&dataFinal={}'.format(codigo, data_inicio, data_fim)
-        df = pd.read_json(url)
-        df.set_index('data', inplace=True)
-        df.index = pd.to_datetime(df.index, dayfirst=True)
-        df.columns = ['SELIC']
-        df['SELIC'] = df['SELIC']/100
-        return df
-
-    data_inicio = '01/05/1993' 
-    data_fim = '30/09/2024'
-    dados=[]
-    dados = extracao_bcb(4390, data_inicio=data_inicio, data_fim=data_fim)
-    indices = ['^BVSP']
-
-    for i in indices:
-        dados[i] = yf.download(i, start='1993-05-01', end='2024-09-30', interval='1mo')['Adj Close'].pct_change()
-
-    dados = dados.iloc[1:]
-    dados = dados + 1
-
-    acumulado = dados.cumprod()
-
-    # Plot
-    plt.figure()
-    plt.plot(acumulado)
-    plt.xlabel('Anos')
-    plt.ylabel('Retornos acumulados')
-    plt.title('CDI x Ibovespa')
-    plt.legend(['CDI', 'Ibovespa'])  # Adiciona legendas    
-    st.pyplot(plt)
+# Plotar o gráfico do IBOVUSD
+plt.figure()
+plt.plot(ibovusd['IBOVUSD'], color='green')
+plt.xlabel('Ano')
+plt.ylabel('Ibovespa dolarizado')
+plt.title('Ibovespa dolarizado desde 2007')
+st.pyplot(plt)
